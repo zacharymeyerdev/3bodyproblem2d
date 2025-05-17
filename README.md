@@ -13,7 +13,6 @@ I need to decide whether to make all of the bodies the same, or different weight
 I need to decide the initial positions, directions, and velocities from the center of mass.
 
 Imports I would like:
-matplotlib - for .animation and .pyplot.
-numpy - for its various mathematical features.
+matplotlib for .animation and .pyplot, and numpy for its various mathematical features.
 
 I still need to learn the use cases for these libraries, so this project will mostly be about teaching myself about those.
