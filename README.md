@@ -14,6 +14,6 @@ I need to decide the initial positions, directions, and velocities from the cent
 
 Imports I would like:
 matplotlib - for .animation and .pyplot
-numpy - for .array and .zeros
+numpy - for its various mathematical features
 
 I still need to learn the use cases for these libraries, so this project will mostly be about teaching myself about those.
