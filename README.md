@@ -11,3 +11,9 @@ This Wikipedia model of it (https://en.wikipedia.org/wiki/Three-body_problem) is
 
 I need to decide whether to make all of the bodies the same, or different weights.
 I need to decide the initial positions, directions, and velocities from the center of mass.
+
+Imports I would like:
+matplotlib - for .animation and .pyplot
+numpy - for .array and .zeros
+
+I still need to learn the use cases for these libraries, so this project will mostly be about teaching myself about those.
