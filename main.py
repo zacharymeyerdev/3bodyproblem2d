@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 positions = np.array([
     [1.0, 0.5],
@@ -7,15 +8,43 @@ positions = np.array([
     [0.25, -1.0],
 ])
 
+fig, ax = plt.subplots()
+sc = ax.scatter(positions[:, 0], positions[:, 1], s=100)
+
 plt.figure()
 plt.scatter(positions[:, 0], positions[:, 1], s=100)
 
-for i, (x, y) in enumerate(positions, start=1):
-    plt.text(x + 0.05, y + 0.05, f"Body {i}")
+ax.set_aspect('equal')
+ax.set_xlim(-2, 3)
+ax.set_ylim(-2, 2)
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_title('3 bodies animation')
 
-plt.title("Positions of Bodies")
-plt.xlabel("X Position")
-plt.ylabel("Y Position")
-plt.gca().set_aspect('equal')
-plt.grid(True)
+def get_positions(k: int) -> np.ndarray:
+    x1 = 1.0 + 0.02 * k # moving right
+    y1 = 0.5
+
+    x2 = -0.5
+    y2 = 0.5 + 0.4 *np.sin(0.08 * k) # sin wave
+
+    angle = 0.05 * k # circular motion
+    x3 = 0.25 + np.cos(angle)
+    y3 = -1 + np.sin(angle)
+
+    return np.array([
+        [x1, y1],
+        [x2, y2],
+        [x3, y3]
+    ])
+
+def update(frame):
+    new_positions = get_positions(frame)
+    sc.set_offsets(new_positions)
+    return sc,
+
+animation = animation.FuncAnimation(
+    fig, update, frames=300, interval=40, blit=True
+)
+
 plt.show()
