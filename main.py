@@ -9,14 +9,18 @@ positions = np.array([
 ])
 
 fig, ax = plt.subplots()
-sc = ax.scatter(positions[:, 0], positions[:, 1], s=100)
+colors = ["#ff0000", "#0000ff", "#00ff00"]
+scatter = ax.scatter(positions[:, 0], positions[:, 1], s=100, c=colors)
 
 plt.figure()
-plt.scatter(positions[:, 0], positions[:, 1], s=100)
+plt.scatter(positions[:, 0], positions[:, 1], s=100, c=colors)
+plt.xlim(-4, 4)
+plt.ylim(-4, 4)
+plt.gca().set_aspect('equal')
 
 ax.set_aspect('equal')
-ax.set_xlim(-2, 3)
-ax.set_ylim(-2, 2)
+ax.set_xlim(-4, 4)
+ax.set_ylim(-4, 4)
 ax.set_xlabel('X-axis')
 ax.set_ylabel('Y-axis')
 ax.set_title('3 bodies animation')
@@ -40,8 +44,8 @@ def get_positions(k: int) -> np.ndarray:
 
 def update(frame):
     new_positions = get_positions(frame)
-    sc.set_offsets(new_positions)
-    return sc,
+    scatter.set_offsets(new_positions)
+    return scatter,
 
 animation = animation.FuncAnimation(
     fig, update, frames=300, interval=40, blit=True
