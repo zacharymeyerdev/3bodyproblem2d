@@ -1,3 +1,16 @@
+'''
+To-do:
+add full trails to the bodies
+use numba for speed (?)
+add constants
+choose masses + initial positions + velocities
+maybe let the user choose at the start
+acceleration
+add forces
+astropy would be nice
+more?
+'''
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
