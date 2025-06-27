@@ -72,7 +72,7 @@ def acceleration(bodies):
             inv_d3 = dist2 ** (-1.5)
             f_vec = -G * bodies[i].mass * bodies[j].mass * inv_d3 * diff
             acc[i] += f_vec / bodies[i].mass
-            acc[j] += f_vec / bodies[j].mass
+            acc[j] += -f_vec / bodies[j].mass
     return acc
 
 def step(bodies, dt=SECONDS_PER_STEP):
@@ -91,41 +91,33 @@ scatter = ax.scatter(POSITIONS[:, 0], POSITIONS[:, 1], s=100, c=colors)
 
 plt.figure()
 plt.scatter(POSITIONS[:, 0], POSITIONS[:, 1], s=100, c=colors)
-plt.xlim(-4, 4)
-plt.ylim(-4, 4)
+plt.xlim(-2e11, 2e11)
+plt.ylim(-2e11, 2e11)
 plt.gca().set_aspect('equal')
 
 ax.set_aspect('equal')
-ax.set_xlim(-4, 4)
-ax.set_ylim(-4, 4)
+ax.set_xlim(-2e11, 2e11)
+ax.set_ylim(-2e11, 2e11)
 ax.set_xlabel('X-axis')
 ax.set_ylabel('Y-axis')
 ax.set_title('3 bodies animation')
+trail_lines = [ax.plot([], [], lw=0.7, color=color)[0] for color in colors]
 
-def get_POSITIONS(k: int) -> np.ndarray:
-    x1 = 1.0 + 0.02 * k # moving right
-    y1 = 0.5
+MAX_TRAIL = config.MAX_TRAIL
 
-    x2 = -0.5
-    y2 = 0.5 + 0.4 *np.sin(0.08 * k) # sin wave
-
-    angle = 0.05 * k # circular motion
-    x3 = 0.25 + np.cos(angle)
-    y3 = -1 + np.sin(angle)
-
-    return np.array([
-        [x1, y1],
-        [x2, y2],
-        [x3, y3]
-    ])
-
-def update(frame):
+def update(_):
     new_POSITIONS = step(bodies)
     scatter.set_offsets(new_POSITIONS)
-    return scatter,
+    for body, line in zip(bodies, trail_lines):
+        if len(body.trail) > MAX_TRAIL:
+            body.trail.pop(0)
+        if body.trail:
+            t = np.vstack(body.trail)
+            line.set_data(t[:, 0], t[:, 1])
+    return [scatter, *trail_lines]
 
 animation = animation.FuncAnimation(
-    fig, update, frames=300, interval=40, blit=True
+    fig, update, interval=40, blit=True
 )
 
 plt.show()
