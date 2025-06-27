@@ -7,7 +7,7 @@ use numba for speed (?)
     njit fastmath
 add constants
     G, DT, and SOFTEN (config file?)
-choose default masses + initial positions + velocities
+choose default masses + initial POSITIONS + velocities
 maybe let the user choose at the start
     parser + args
 acceleration
@@ -19,6 +19,8 @@ more?
     collision detection
     better rendering
     tree code? (i gotta look into this)
+    REARRANGE CODE
+    lots and lots of comments
 '''
 
 from dataclasses import dataclass
@@ -26,24 +28,43 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+@dataclass
 class Body:
     pos: np.darray
     vel: np.ndarray
     mass: float
     trail: list
 
-positions = np.array([
-    [1.0, 0.5],
-    [-0.5, 0.5],
-    [0.25, -1.0],
+MASS = np.array([
+    5.97e24, # Earth
+    7.35e22, # Moon
+    1.989e30, # Sun
 ])
+
+POSITIONS = np.array([
+    [1.5e11, 0.0], # Earth
+    [1.5e11, 4.0e8], # Moon
+    [0.0, 0.0], # Sun
+])
+
+VELOCITIES = np.array([
+    [0.0, 29780.0],  # Earth
+    [1022.0, 0.0],   # Moon
+    [0.0, 0.0],      # Sun
+])
+
+bodies = [Body(pos=POSITIONS[i].copy(),
+            vel=VELOCITIES[i].copy(),
+            mass=MASS[i],
+            trail=[])
+        for i in range(len(MASS))]
 
 fig, ax = plt.subplots()
 colors = ["#ff0000", "#0000ff", "#00ff00"]
-scatter = ax.scatter(positions[:, 0], positions[:, 1], s=100, c=colors)
+scatter = ax.scatter(POSITIONS[:, 0], POSITIONS[:, 1], s=100, c=colors)
 
 plt.figure()
-plt.scatter(positions[:, 0], positions[:, 1], s=100, c=colors)
+plt.scatter(POSITIONS[:, 0], POSITIONS[:, 1], s=100, c=colors)
 plt.xlim(-4, 4)
 plt.ylim(-4, 4)
 plt.gca().set_aspect('equal')
@@ -55,7 +76,7 @@ ax.set_xlabel('X-axis')
 ax.set_ylabel('Y-axis')
 ax.set_title('3 bodies animation')
 
-def get_positions(k: int) -> np.ndarray:
+def get_POSITIONS(k: int) -> np.ndarray:
     x1 = 1.0 + 0.02 * k # moving right
     y1 = 0.5
 
@@ -73,8 +94,8 @@ def get_positions(k: int) -> np.ndarray:
     ])
 
 def update(frame):
-    new_positions = get_positions(frame)
-    scatter.set_offsets(new_positions)
+    new_POSITIONS = get_POSITIONS(frame)
+    scatter.set_offsets(new_POSITIONS)
     return scatter,
 
 animation = animation.FuncAnimation(
