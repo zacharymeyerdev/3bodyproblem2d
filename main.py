@@ -13,7 +13,6 @@ maybe let the user choose at the start
 acceleration
     velocity verlet + array of shapes
 add forces
-
 astropy would be nice
     astropy.units with .value
 more?
@@ -22,9 +21,16 @@ more?
     tree code? (i gotta look into this)
 '''
 
+from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+
+class Body:
+    pos: np.darray
+    vel: np.ndarray
+    mass: float
+    trail: list
 
 positions = np.array([
     [1.0, 0.5],
