@@ -30,7 +30,7 @@ import matplotlib.animation as animation
 
 @dataclass
 class Body:
-    pos: np.darray
+    pos: np.ndarray
     vel: np.ndarray
     mass: float
     trail: list
@@ -58,6 +58,12 @@ bodies = [Body(pos=POSITIONS[i].copy(),
             mass=MASS[i],
             trail=[])
         for i in range(len(MASS))]
+
+def acceleration(b):
+
+
+def step(b):
+
 
 fig, ax = plt.subplots()
 colors = ["#ff0000", "#0000ff", "#00ff00"]
