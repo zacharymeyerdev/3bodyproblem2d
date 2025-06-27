@@ -1,14 +1,25 @@
 '''
 To-do:
 add full trails to the bodies
+    make a data model for each body, store previous locations in a list
+    test around for max trail length
 use numba for speed (?)
+    njit fastmath
 add constants
-choose masses + initial positions + velocities
+    G, DT, and SOFTEN (config file?)
+choose default masses + initial positions + velocities
 maybe let the user choose at the start
+    parser + args
 acceleration
+    velocity verlet + array of shapes
 add forces
+
 astropy would be nice
+    astropy.units with .value
 more?
+    collision detection
+    better rendering
+    tree code? (i gotta look into this)
 '''
 
 import numpy as np
